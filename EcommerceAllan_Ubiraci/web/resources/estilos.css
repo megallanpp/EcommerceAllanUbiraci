@@ -1,0 +1,199 @@
+p .textBottom{
+    vertical-align:text-bottom;
+}
+
+div.fotter{
+    width: 1250px; 
+    height: 200px; 
+    text-align: center;
+    background: #428bca;
+    margin-top: 40px;
+    //border: 1px solid black
+}
+
+div.topDiv{
+    width: auto;
+    height: 100px;
+
+}
+
+.topDiv .topPanel{
+    width: 1063px;
+    height: 100px;
+    float: right;
+}
+
+.topPanel .search{
+    width: 1063px;
+    height: 50px;
+    //background-color: #ff99ff;
+    padding: 10px;
+}
+
+.topPanel .departmentTitle{
+    width: 1063px; 
+    height: 100px; 
+    //background-color: #3333ff;
+    padding: 10px;
+}
+
+div.middleDiv{
+    width: 1250px;
+    height: 553px;
+    //background-color: #e8f78e;
+}
+
+.middleDiv .leftPanel{
+    width: 200px;
+    height: 553px;
+    float: left;
+    //background-color: green;
+    text-align: center;
+}
+
+.middleDiv .rightPanel{
+    width: 200px; 
+    height: 760px; 
+    //background-color: green; 
+    text-align: center;  
+    float: right;
+}
+
+.middleDiv .middlePanel{
+    width: 1034px; 
+    height: 553px; 
+    float: right;
+
+    position: relative; 
+}
+
+.middleDiv .middlePanelCarrinho{
+    width: 1240px; 
+    height: 513px; 
+    position: relative; 
+}
+
+
+//id html attribute
+#middlePanel-content { 
+    position: absolute; 
+    //bottom: 0; 
+    left: 0; 
+}
+
+#topPanel-search-button{
+    float: right;
+}
+
+#topPanel-search-input{
+    float: right;
+    width: 200px;
+    height: 34px;
+}
+
+#topPanel-search-carrinho{
+    float: right;
+    width: 50px;
+}
+
+#topPanel-search-login{
+    float: right;
+}
+
+.searchField{
+    float: right;
+    width: 0px;
+}
+
+.carrinho{
+    float: left;
+    margin-top: -12px;
+}
+
+.logo {
+    width: 200px; 
+    height: 90px;
+    float: left;
+}
+
+.searchComponents {
+    width: 250px;
+    float: right;
+    margin-right: 50px;
+}
+
+.form-head {
+    width: 740px;
+    float: left;
+}
+
+.container {
+    margin-top: 18px !important;
+    margin-bottom: 22px !important;
+    padding-top: 5px !important;
+}
+
+.list-inline li a {
+    color: black !important;
+}
+
+.fotter img {
+    width: 27%;
+    margin-top: 26px;
+}
+
+.formasPagamento {
+    width: 1263px;
+    height: 513px;
+}
+
+.colunaUm {
+    height: 190px;
+}
+
+.dadosCompra {
+    float: left;
+    width: 590px;
+    height: auto;
+    margin-left: 10px;
+}
+
+.enderecoEntrega {
+    float: right;
+    width: 590px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.formaEntrega{
+    width: 1211px;
+    margin-left: 10px;
+}
+
+.pagamento {
+    width: 1211px;
+    margin-left: 10px;
+}
+
+.modoPagamento {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-align: center;
+}
+
+.modoPagamento li {
+    display: inline;
+}
+
+.modoPagamento li a {
+    text-decoration: none;
+}
+
+.btnFinalCompra {
+    float: right;
+}
+
+.compraFinalizada {
+    text-align: center;
+}
