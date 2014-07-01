@@ -9,7 +9,12 @@
         <link rel="stylesheet" href="css/bootstrap-3.1.1-dist/css/bootstrap.css" type="text/css"/>
     </head>
     <body>
-
+        <c:if test="${not empty error}">
+            <div class="alert alert-warning" role="alert">${error}</div>
+        </c:if>
+        <c:if test="${not empty success}">
+            <div class="alert alert-success" role="alert">${success}</div>
+        </c:if>
         <div class="panel panel-primary" >
             <!-- Default panel contents -->
             <div class="panel-heading">Categorias</div>

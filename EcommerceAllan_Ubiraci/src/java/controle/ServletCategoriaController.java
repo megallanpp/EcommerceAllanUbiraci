@@ -2,6 +2,7 @@ package controle;
 
 import Dominio.Categoria;
 import controle.DAO.CategoriaJpaController;
+import controle.DAO.exceptions.PreexistingEntityException;
 import controle.DAO.exceptions.RollbackFailureException;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,30 +23,30 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author allan
  */
-@WebServlet(name = "ServletCategoriaController", urlPatterns = {"/ServletCategoriaController"})
+@WebServlet(name = "ServletCategoriaController", urlPatterns = {"/categoriafc"})
 public class ServletCategoriaController extends HttpServlet {
 
-    private void incluir() {
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+    
+    private void incluir() throws RollbackFailureException, PreexistingEntityException, ServletException, IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EcommerceAllan_UbiraciPU");
         CategoriaJpaController categoriaDAO = new CategoriaJpaController(emf);
 
         Categoria categoria = new Categoria();
-        try {
-            categoria.setNome(null);
-            categoriaDAO.create(categoria);
-        } catch (RollbackFailureException ex) {
-            Logger.getLogger(ServletCategoriaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ServletCategoriaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        categoria.setNome(request.getParameter("nome"));
+        categoriaDAO.create(categoria);
+        request.setAttribute("success", "Categoria criada com sucesso");
+        this.listar();
     }
 
-    private void listar() {
+    private void listar() throws ServletException, IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EcommerceAllan_UbiraciPU");
         CategoriaJpaController categoriaDAO = new CategoriaJpaController(emf);
-        for (Categoria categoria : categoriaDAO.findCategoriaEntities()) {
-            System.out.println(categoria.getId());
-        }
+        request.setAttribute("categorias", categoriaDAO.findCategoriaEntities());
+        
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/ListarCategorias.jsp");
+        rd.forward(request, response);
     }
 
     private void alterar(Long id)  {
@@ -59,17 +61,28 @@ public class ServletCategoriaController extends HttpServlet {
         }
     }
 
-    private void excluir(Long id) {
+    private void excluir(Long id) throws ServletException, IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EcommerceAllan_UbiraciPU");
         CategoriaJpaController categoriaDAO = new CategoriaJpaController(emf);
         try {
             categoriaDAO.destroy(id);
-        } catch (RollbackFailureException ex) {
+            request.setAttribute("success", "Categoria excluida.");
+            listar();
+        }catch (RollbackFailureException ex) {
+            request.setAttribute("error", "Impossivel excluir registro");
+            listar();
             Logger.getLogger(ServletCategoriaController.class.getName()).log(Level.SEVERE, null, ex);
+        }catch (Exception ex){
+            request.setAttribute("error", "Impossivel excluir registro");
+            listar();
+            
         }
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
+        this.request = request;
+        this.response = response;
+        
         String tipo = request.getParameter("tipo") == null ? "listar" : request.getParameter("tipo");
         Long id = request.getParameter("id") == null ? 1l : Long.parseLong(request.getParameter("id"));
 
@@ -85,11 +98,6 @@ public class ServletCategoriaController extends HttpServlet {
         if (tipo.equalsIgnoreCase("excluir")) {
             excluir(id);
         }
-
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        out.println("<h1>Verifique o banco de dados para validar o teste</h1>");
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

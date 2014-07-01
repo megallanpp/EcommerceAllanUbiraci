@@ -142,7 +142,7 @@ public class CategoriaJpaController implements Serializable {
 //            }
 //        }
 //    }
-    public void destroy(Long id) throws RollbackFailureException{
+    public void destroy(Long id) throws RollbackFailureException, Exception{
         EntityManager em = null;
         EntityTransaction utx = null;
         try {
@@ -158,7 +158,7 @@ public class CategoriaJpaController implements Serializable {
             } catch (Exception re) {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
-            //throw ex;
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();
