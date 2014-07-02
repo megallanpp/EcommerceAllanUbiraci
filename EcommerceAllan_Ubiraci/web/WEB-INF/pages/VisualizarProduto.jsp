@@ -1,9 +1,3 @@
-<%-- 
-    Document   : VisualizarProduto
-    Created on : 30/05/2014, 20:16:17
-    Author     : allan
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

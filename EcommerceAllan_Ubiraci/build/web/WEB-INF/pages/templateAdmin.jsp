@@ -14,7 +14,7 @@
         <div class="middleDiv">
             <div class="middlePanelCarrinho">
 
-                <h1>${param.title}</h1>
+                <%--\<h1>${param.title}</h1>--%>
 
                 <%--<jsp:include page="/WEB-INF/pages/${param.content}Ordenacao.jsp"/> --%>
 

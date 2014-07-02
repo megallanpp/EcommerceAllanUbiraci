@@ -1,3 +1,4 @@
+
 p .textBottom{
     vertical-align:text-bottom;
 }
@@ -196,4 +197,8 @@ div.middleDiv{
 
 .compraFinalizada {
     text-align: center;
+}
+
+.size{
+    width: 1263px;
 }

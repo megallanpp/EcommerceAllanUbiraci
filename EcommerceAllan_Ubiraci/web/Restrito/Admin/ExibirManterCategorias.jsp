@@ -5,19 +5,13 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Listar categorias</title>
         <link rel="stylesheet" href="css/bootstrap-3.1.1-dist/css/bootstrap.css" type="text/css"/>
+        <title>Categorias</title>
     </head>
     <body>
         <div class="panel panel-primary" >
             <!-- Default panel contents -->
             <div class="panel-heading">Categorias</div>
-            <div class="panel-body">
-                <p>
-                    A seguir podemos ver a lista de categoria com a quantidade de produtos.
-                </p>
-            </div>
-
             <!-- List group -->
             <ul class="list-group">
                 <c:forEach items="${requestScope.categorias}" var="categoria"> 

@@ -1,12 +1,15 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Login</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="css/bootstrap-3.1.1-dist/css/bootstrap.css"
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/estilos.css" />
+        <link rel="stylesheet" href="css/bootstrap-3.1.1-dist/css/bootstrap.css" type="text/css"/>
     </head>
-    <body>
+    <body style="width: 1263px;">
+        <div class="topDiv">
+            <jsp:include page="/WEB-INF/pages/header.jsp"/>
+        </div>
         <div class="container" style="width: 500px;">
             <div class="panel-default">
                 <div class="panel-body">
@@ -31,6 +34,9 @@
                     </fieldset>
                 </div>
             </div>
+        </div>
+        <div class="fotter">
+            <jsp:include page="/WEB-INF/pages/footer.jsp"/>
         </div>
     </body>
 </html>
