@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,9 +21,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author allan
  */
-@WebServlet(name = "ServletProdutoController", urlPatterns = {"/ServletProdutoController"})
+@WebServlet(name = "ServletProdutoController", urlPatterns = {"/produtofc"})
 public class ServletProdutoController extends HttpServlet {
 
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+    
     private void incluir() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EcommerceAllan_UbiraciPU");
         ProdutoJpaController produtoDAO = new ProdutoJpaController(emf);
@@ -38,12 +42,13 @@ public class ServletProdutoController extends HttpServlet {
         }
     }
 
-    private void listar() {
+    private void listar() throws ServletException, IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EcommerceAllan_UbiraciPU");
         ProdutoJpaController produtoDAO = new ProdutoJpaController(emf);
-        for (Produto produto : produtoDAO.findProdutoEntities()) {
-            System.out.println(produto.getId());
-        }
+        request.setAttribute("produtos", produtoDAO.findProdutoEntities());
+                
+        RequestDispatcher rd = request.getRequestDispatcher("/Restrito/Admin/ManterProdutos.jsp");
+        rd.forward(request, response);
     }
 
     private void alterar(Long id)  {

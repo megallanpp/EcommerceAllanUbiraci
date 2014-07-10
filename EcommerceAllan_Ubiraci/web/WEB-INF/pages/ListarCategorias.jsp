@@ -14,7 +14,7 @@
         </c:if>
         <c:if test="${not empty success}">
             <div class="alert alert-success" role="alert">${success}</div>
-        </c:if>
+        </c:if>            
         <div class="panel panel-primary" >
             <!-- Default panel contents -->
             <div class="panel-heading">Categorias</div>

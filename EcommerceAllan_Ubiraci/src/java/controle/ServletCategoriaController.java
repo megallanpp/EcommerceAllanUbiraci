@@ -28,6 +28,7 @@ public class ServletCategoriaController extends HttpServlet {
 
     private HttpServletRequest request;
     private HttpServletResponse response;
+    javax.servlet.http.HttpSession session;
     
     private void incluir() throws RollbackFailureException, PreexistingEntityException, ServletException, IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EcommerceAllan_UbiraciPU");
@@ -36,7 +37,8 @@ public class ServletCategoriaController extends HttpServlet {
         Categoria categoria = new Categoria();
         categoria.setNome(request.getParameter("nome"));
         categoriaDAO.create(categoria);
-        request.setAttribute("success", "Categoria criada com sucesso");
+//        request.setAttribute("success", "Categoria criada com sucesso");
+        session.setAttribute("success", "Categoria criada com sucesso");
         this.listar();
     }
 
@@ -45,20 +47,23 @@ public class ServletCategoriaController extends HttpServlet {
         CategoriaJpaController categoriaDAO = new CategoriaJpaController(emf);
         request.setAttribute("categorias", categoriaDAO.findCategoriaEntities());
         
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/ListarCategorias.jsp");
+//        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/ListarCategorias.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/Restrito/Admin/ManterCategorias.jsp");
         rd.forward(request, response);
     }
 
-    private void alterar(Long id)  {
+    private void alterar(Long id) throws ServletException, IOException  {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EcommerceAllan_UbiraciPU");
         CategoriaJpaController categoriaDAO = new CategoriaJpaController(emf);
         Categoria categoria = categoriaDAO.findCategoria(id);
-        categoria.setNome("NOVONOME");
+        categoria.setNome(request.getParameter("nome"));
         try {
             categoriaDAO.edit(categoria);
         } catch (RollbackFailureException ex) {
             Logger.getLogger(ServletCategoriaController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        request.setAttribute("success", "Categoria alterada com sucesso");
+        this.listar();
     }
 
     private void excluir(Long id) throws ServletException, IOException {

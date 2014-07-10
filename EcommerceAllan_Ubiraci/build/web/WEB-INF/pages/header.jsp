@@ -22,9 +22,9 @@
                                     Você está logado | 
                                     <a href="${pageContext.request.contextPath}/logout.jsp">logoff</a>
                                     | 
-                                    <a href="${pageContext.request.contextPath}/ServletManterProdutos">Manter Produtos</a>
+                                    <a href="${pageContext.request.contextPath}/produtofc?tipo=listar">Manter Produtos</a>
                                     | 
-                                    <a href="${pageContext.request.contextPath}/ServletManterCategorias">Manter Categorias</a>
+                                    <a href="${pageContext.request.contextPath}/categoriafc?tipo=listar">Manter Categorias</a>
                                 </c:when>
                                 <c:otherwise>
                                     Bem vindo visitante! Faça seu <a href="${pageContext.request.contextPath}/login.jsp">login</a> ou <a href="${pageContext.request.contextPath}/ServletCadastroPessoa">cadastre-se!</a>
