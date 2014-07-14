@@ -4,10 +4,11 @@ import Dominio.Categoria;
 import controle.DAO.CategoriaJpaController;
 import controle.DAO.exceptions.PreexistingEntityException;
 import controle.DAO.exceptions.RollbackFailureException;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -28,7 +29,7 @@ public class ServletCategoriaController extends HttpServlet {
 
     private HttpServletRequest request;
     private HttpServletResponse response;
-    
+
     private void incluir() throws RollbackFailureException, PreexistingEntityException, ServletException, IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EcommerceAllan_UbiraciPU");
         CategoriaJpaController categoriaDAO = new CategoriaJpaController(emf);
@@ -43,14 +44,16 @@ public class ServletCategoriaController extends HttpServlet {
     private void listar() throws ServletException, IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EcommerceAllan_UbiraciPU");
         CategoriaJpaController categoriaDAO = new CategoriaJpaController(emf);
-        request.setAttribute("categorias", categoriaDAO.findCategoriaEntities());
-        
+        List<Categoria> listNaoOrdenada = categoriaDAO.findCategoriaEntities();
+        Collections.sort(listNaoOrdenada);
+        request.setAttribute("categorias", listNaoOrdenada);
+
 //        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/ListarCategorias.jsp");
         RequestDispatcher rd = request.getRequestDispatcher("/Restrito/Admin/ManterCategorias.jsp");
         rd.forward(request, response);
     }
 
-    private void alterar(Long id) throws ServletException, IOException  {
+    private void alterar(Long id) throws ServletException, IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EcommerceAllan_UbiraciPU");
         CategoriaJpaController categoriaDAO = new CategoriaJpaController(emf);
         Categoria categoria = categoriaDAO.findCategoria(id);
@@ -71,21 +74,21 @@ public class ServletCategoriaController extends HttpServlet {
             categoriaDAO.destroy(id);
             request.setAttribute("success", "Categoria excluida.");
             listar();
-        }catch (RollbackFailureException ex) {
+        } catch (RollbackFailureException ex) {
             request.setAttribute("error", "Impossivel excluir registro");
             listar();
             Logger.getLogger(ServletCategoriaController.class.getName()).log(Level.SEVERE, null, ex);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             request.setAttribute("error", "Impossivel excluir registro");
             listar();
-            
+
         }
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
         this.request = request;
         this.response = response;
-        
+
         String tipo = request.getParameter("tipo") == null ? "listar" : request.getParameter("tipo");
         Long id = request.getParameter("id") == null ? 1l : Long.parseLong(request.getParameter("id"));
 

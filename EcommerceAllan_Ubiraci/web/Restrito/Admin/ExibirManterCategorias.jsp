@@ -36,10 +36,10 @@
                         </div> 
                         <div class="control-group">
                             <div class="controls">
-                                <a onclick="setVisibility('divEditar', 'inline');"> Editar </a>
+                                <a onclick="setVisibility('divEditar_${categoria.id}', 'inline');"> Editar </a>
                                 <a href="${pageContext.request.contextPath}/categoriafc?tipo=excluir&id=${categoria.id}"> Excluir </a>
                             </div>
-                            <div class="controls" id="divEditar" style="display: none">
+                            <div class="controls" id="divEditar_${categoria.id}" style="display: none">
                                 <form method="POST" action="${pageContext.request.contextPath}/categoriafc?tipo=alterar&id=${categoria.id}">
                                     Nome: <input type="text" name="nome" value="${categoria.nome}">
                                     <button type="submit" class="btn btn-small btn-primary" >Salvar</button>

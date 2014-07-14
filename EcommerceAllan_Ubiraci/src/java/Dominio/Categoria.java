@@ -22,7 +22,7 @@ import javax.persistence.Table;
  */
 @Table(name = "tab_categoria")
 @Entity
-public class Categoria implements Serializable {
+public class Categoria implements Serializable, Comparable<Categoria> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,6 +76,11 @@ public class Categoria implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @Override
+    public int compareTo(Categoria other) {
+        return nome.compareTo(other.nome);
     }
 
 }
