@@ -28,7 +28,6 @@ public class ServletCategoriaController extends HttpServlet {
 
     private HttpServletRequest request;
     private HttpServletResponse response;
-    javax.servlet.http.HttpSession session;
     
     private void incluir() throws RollbackFailureException, PreexistingEntityException, ServletException, IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EcommerceAllan_UbiraciPU");
@@ -37,8 +36,7 @@ public class ServletCategoriaController extends HttpServlet {
         Categoria categoria = new Categoria();
         categoria.setNome(request.getParameter("nome"));
         categoriaDAO.create(categoria);
-//        request.setAttribute("success", "Categoria criada com sucesso");
-        session.setAttribute("success", "Categoria criada com sucesso");
+        request.setAttribute("success", "Categoria criada com sucesso");
         this.listar();
     }
 
