@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Dominio;
 
 import java.io.Serializable;
@@ -25,21 +24,21 @@ import javax.persistence.TemporalType;
 @Table(name = "tab_categoriaproduto")
 @Entity
 public class CategoriaProduto implements Serializable {
-    
+
     @Temporal(TemporalType.DATE)
     private Date dataInclusao;
-    
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne//(cascade = CascadeType.ALL)
     private Categoria categoria;
-    
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne//(cascade = CascadeType.ALL)
     private Produto produto;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    public CategoriaProduto(Categoria categoria, Produto produto){
+
+    public CategoriaProduto(Categoria categoria, Produto produto) {
         this.categoria = categoria;
         this.produto = produto;
     }
@@ -81,5 +80,13 @@ public class CategoriaProduto implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }

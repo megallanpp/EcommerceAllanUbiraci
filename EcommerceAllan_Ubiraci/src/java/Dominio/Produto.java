@@ -17,21 +17,21 @@ public class Produto implements Serializable {
 
     @OneToMany(mappedBy = "produto")
     private List<CategoriaProduto> categoriasProdutos;
-    
+
     @OneToMany(mappedBy = "produto")
     private List<ProdutoCarrinho> produtosCarrinhos;
-    
+
     @Column(length = 100)
     private String descricao;
-    
+
     @Column(length = 100, nullable = false)
     private String nome;
-    
+
     private double valor;
-    
+
     @Column(length = 255)
     private String nomeArquivoImagem;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,21 +44,21 @@ public class Produto implements Serializable {
     public Produto(String nome, String descricao, double valor, List<Categoria> categorias, String nomeArquivoImagem) {
         this.categoriasProdutos = new ArrayList<CategoriaProduto>();
         this.produtosCarrinhos = new ArrayList<ProdutoCarrinho>();
-        
+
         this.nome = nome;
         this.descricao = descricao;
         this.valor = valor;
         for (Categoria categoria : categorias) {
             CategoriaProduto cp = new CategoriaProduto(categoria, this);
             this.categoriasProdutos.add(cp);
-        }                
+        }
         this.nomeArquivoImagem = nomeArquivoImagem;
     }
 
-    public List<Categoria> getCategorias(){
+    public List<Categoria> getCategorias() {
         List<Categoria> listCategorias = new ArrayList<Categoria>();
-        
-        for(CategoriaProduto categoriaProduto : this.categoriasProdutos){
+
+        for (CategoriaProduto categoriaProduto : this.getCategoriasProdutos()) {
             listCategorias.add(categoriaProduto.getCategoria());
         }
         return listCategorias;
@@ -102,6 +102,43 @@ public class Produto implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean contemCategoria(Categoria categoria) {
+        for (Categoria cat : getCategorias()) {
+            if(categoria.getId() == cat.getId())
+                return true;
+        }
+        
+        return false;
+    }
+
+    /**
+     * @return the categoriasProdutos
+     */
+    public List<CategoriaProduto> getCategoriasProdutos() {
+        return categoriasProdutos;
+    }
+
+    /**
+     * @param categoriasProdutos the categoriasProdutos to set
+     */
+    public void setCategoriasProdutos(List<CategoriaProduto> categoriasProdutos) {
+        this.categoriasProdutos = categoriasProdutos;
+    }
+
+    /**
+     * @return the produtosCarrinhos
+     */
+    public List<ProdutoCarrinho> getProdutosCarrinhos() {
+        return produtosCarrinhos;
+    }
+
+    /**
+     * @param produtosCarrinhos the produtosCarrinhos to set
+     */
+    public void setProdutosCarrinhos(List<ProdutoCarrinho> produtosCarrinhos) {
+        this.produtosCarrinhos = produtosCarrinhos;
     }
 
 }

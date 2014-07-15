@@ -81,7 +81,7 @@ public class ServletAutenticacao extends HttpServlet {
                 request.getSession().setAttribute("admin",true);
             }
             
-            rd = request.getRequestDispatcher("/ServletProduto"); 
+            rd = request.getRequestDispatcher("/categoriaprodutofc?tipo=listar"); 
             rd.forward(request, response); 
         } 
         else{ out.println("<b>Login invalido ou senha incorreta</b><br>"); 

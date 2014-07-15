@@ -25,14 +25,13 @@
             <c:if test="${not empty success}">
                 <div class="alert alert-success" role="alert">${success}</div>
             </c:if>                
-            
+
             <!-- List group -->
             <ul class="list-group">
                 <c:forEach items="${requestScope.categorias}" var="categoria"> 
                     <li class="list-group-item">     
-                        <a href="#">${categoria.nome} <span class="badge">${categoria.produtos.size()}</span></a>
-                        <br>
                         <div class="control-group">
+                            <a href="#">${categoria.nome} <span class="badge">${categoria.produtos.size()}</span></a>
                         </div> 
                         <div class="control-group">
                             <div class="controls">

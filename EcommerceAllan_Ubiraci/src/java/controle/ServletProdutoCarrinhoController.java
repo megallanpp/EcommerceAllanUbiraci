@@ -24,6 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ServletProdutoCarrinhoController", urlPatterns = {"/ServletProdutoCarrinhoController"})
 public class ServletProdutoCarrinhoController extends HttpServlet {
 
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+    
     private void incluir() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EcommerceAllan_UbiraciPU");
         ProdutoCarrinhoJpaController produtoCarrinhoDAO = new ProdutoCarrinhoJpaController(emf);
@@ -70,6 +73,9 @@ public class ServletProdutoCarrinhoController extends HttpServlet {
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
+        this.request = request;
+        this.response = response;
+        
         String tipo = request.getParameter("tipo") == null ? "listar" : request.getParameter("tipo");
         Long id = request.getParameter("id") == null ? 1l : Long.parseLong(request.getParameter("id"));
 

@@ -24,6 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ServletPedidoController", urlPatterns = {"/ServletPedidoController"})
 public class ServletPedidoController extends HttpServlet {
 
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+    
     private void incluir() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EcommerceAllan_UbiraciPU");
         PedidoJpaController pedidoDAO = new PedidoJpaController(emf);
@@ -70,6 +73,9 @@ public class ServletPedidoController extends HttpServlet {
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
+        this.request = request;
+        this.response = response;
+        
         String tipo = request.getParameter("tipo") == null ? "listar" : request.getParameter("tipo");
         Long id = request.getParameter("id") == null ? 1l : Long.parseLong(request.getParameter("id"));
 

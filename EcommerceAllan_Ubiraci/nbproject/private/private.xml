@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/allan/Documents/GitHub/EcommerceAllanUbiraci/EcommerceAllan_Ubiraci/web/WEB-INF/pages/ListarCategorias.jsp</file>
-            <file>file:/C:/Users/allan/Documents/GitHub/EcommerceAllanUbiraci/EcommerceAllan_Ubiraci/web/Restrito/Admin/ExibirIncluirCategoria.jsp</file>
-            <file>file:/C:/Users/allan/Documents/GitHub/EcommerceAllanUbiraci/EcommerceAllan_Ubiraci/src/java/controle/ServletCategoriaController.java</file>
+            <file>file:/C:/Users/allan/Documents/GitHub/EcommerceAllanUbiraci/EcommerceAllan_Ubiraci/web/Restrito/Admin/ExibirIncluirProduto.jsp</file>
+            <file>file:/C:/Users/allan/Documents/GitHub/EcommerceAllanUbiraci/EcommerceAllan_Ubiraci/web/Restrito/Admin/ExibirManterProdutos.jsp</file>
+            <file>file:/C:/Users/allan/Documents/GitHub/EcommerceAllanUbiraci/EcommerceAllan_Ubiraci/src/java/controle/ServletProdutoController.java</file>
             <file>file:/C:/Users/allan/Documents/GitHub/EcommerceAllanUbiraci/EcommerceAllan_Ubiraci/web/Restrito/Admin/ExibirManterCategorias.jsp</file>
-            <file>file:/C:/Users/allan/Documents/GitHub/EcommerceAllanUbiraci/EcommerceAllan_Ubiraci/web/Restrito/Admin/ManterCategorias.jsp</file>
         </group>
     </open-files>
 </project-private>
