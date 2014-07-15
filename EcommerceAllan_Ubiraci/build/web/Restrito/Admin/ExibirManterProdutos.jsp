@@ -13,6 +13,7 @@
                 document.getElementById(id).style.display = visibility;
             }
         </script>
+
     </head>
     <body>
         <div class="panel panel-primary" >
@@ -31,12 +32,12 @@
                         <div class="col-sm-6 col-md-3" style="width: 1145px;">
                             <div class="thumbnail" id="thumbnail" style="height: 150px;">
                                 <div style="width: 221px; height: 150px; float: left">
-                                    ${produto.nome}
-                                    </br>
-                                    ${produto.descricao}
+                                    <b>Nome:</b> ${produto.nome} </br>
+                                    <b>Valor:</b> ${produto.valor} </br>
+                                    <b>Descrição:</b> ${produto.descricao}
                                 </div>
                                 <div style="width: 221px; height: 150px; float: left">
-                                    <img src="${pageContext.request.contextPath}/resources/${produto.nomeArquivoImagem}" alt="Generic placeholder thumbnail" style="width: 140px;">
+                                    <img src="${pageContext.request.contextPath}/resources/uploads/${produto.nomeArquivoImagem}" alt="Generic placeholder thumbnail" style="width: 140px;">
                                 </div>
                                 <div style="width: 221px; height: 150px; float: left ; overflow-y: scroll;">  
                                     <c:forEach items="${produto.categorias}" var="categoria"> 
@@ -61,7 +62,7 @@
                                 <div class="controls" id="divEditar_${produto.id}" style="display: none;">
                                     <form method="POST" action="${pageContext.request.contextPath}/produtofc?tipo=alterar&id=${produto.id}">
                                         Nome: <input type="text" name="nome" value="${produto.nome}"> </br>
-                                        Descricao: <input type="text" name="descricao" value="${produto.descricao}"> </br>
+                                        Descricao: <input type="text" name="descricao" maxlength="100" value="${produto.descricao}"> </br>
                                         Valor: <input type="text" name="valor" value="${produto.valor}"> (ex:9.99) </br>
 
                                         <button type="submit" class="btn btn-small btn-primary" >Salvar</button>                                    
@@ -76,12 +77,14 @@
                                             setVisibility('divEditarCategoriaProduto_${produto.id}', 'inline');"> Selecionar Categorias </a>                       
                                 </div>
 
-                                <div class="controls" id="divEditarImagem_${produto.id}" style="display: none;">
-                                    <form method="POST" action="${pageContext.request.contextPath}/produtofc?tipo=alterarimagem&id=${produto.id}}">
-                                        Selecione uma nova imagem:
-
-                                        <button type="submit" class="btn btn-small btn-primary" >Salvar</button>                                    
-                                    </form>                                
+                                <div class="controls" id="divEditarImagem_${produto.id}" style="display: none; float: left;">
+                                    <li >
+                                        <form action="upload" method="post" enctype="multipart/form-data">
+                                            <input type="file" name="file" />
+                                            <input type="hidden" name="idproduto" value="${produto.id}" />
+                                            <button type="submit" class="btn btn-small btn-primary" >enviar</button>                                    
+                                        </form> 
+                                    </li>
                                 </div>
 
                                 <div class="controls" id="divEditarCategoriaProduto_${produto.id}" style="display: none;">

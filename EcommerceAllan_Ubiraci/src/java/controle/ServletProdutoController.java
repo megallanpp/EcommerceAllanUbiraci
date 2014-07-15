@@ -8,6 +8,7 @@ import controle.DAO.CategoriaProdutoJpaController;
 import controle.DAO.ProdutoJpaController;
 import controle.DAO.exceptions.PreexistingEntityException;
 import controle.DAO.exceptions.RollbackFailureException;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
@@ -61,14 +62,40 @@ public class ServletProdutoController extends HttpServlet {
     }
 
     private void listar() throws ServletException, IOException {
+        listar(true);
+    }
+
+    private void listar(boolean alteradoObjetos) throws ServletException, IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EcommerceAllan_UbiraciPU");
         ProdutoJpaController produtoDAO = new ProdutoJpaController(emf);
-        request.setAttribute("produtos", produtoDAO.findProdutoEntities());
+        List<Produto> listProdutoNaoOrdenada = produtoDAO.findProdutoEntities();
+        Collections.sort(listProdutoNaoOrdenada);
+
+        if (alteradoObjetos) {
+            for (Produto produto : listProdutoNaoOrdenada) {
+                try {
+                    produtoDAO.getEntityManager().refresh(produto);
+                } catch (Exception e) {
+                }
+            }
+        }
+
+        request.setAttribute("produtos", listProdutoNaoOrdenada);
 
         CategoriaJpaController categoriaDAO = new CategoriaJpaController(emf);
-        List<Categoria> listNaoOrdenada = categoriaDAO.findCategoriaEntities();
-        Collections.sort(listNaoOrdenada);
-        request.setAttribute("categorias", listNaoOrdenada);
+        List<Categoria> listCategoriaNaoOrdenada = categoriaDAO.findCategoriaEntities();
+        Collections.sort(listCategoriaNaoOrdenada);
+
+        if (alteradoObjetos) {
+            for (Categoria categoria : listCategoriaNaoOrdenada) {
+                try {
+                    categoriaDAO.getEntityManager().refresh(categoria);
+                } catch (Exception e) {
+                }
+            }
+        }
+
+        request.setAttribute("categorias", listCategoriaNaoOrdenada);
 
         RequestDispatcher rd = request.getRequestDispatcher("/Restrito/Admin/ManterProdutos.jsp");
         rd.forward(request, response);
@@ -81,20 +108,31 @@ public class ServletProdutoController extends HttpServlet {
 
         Produto produto = produtoDAO.findProduto(id);
 
-        Long idcategoria = Long.parseLong(request.getParameter("idcategoria"));
+        Long idcategoria;
+        try {
+            idcategoria = Long.parseLong(request.getParameter("idcategoria"));
+        } catch (NumberFormatException e) {
+            idcategoria = Long.parseLong("0");
+        }
+                    
+        String filepath =  (String) request.getAttribute("filepath");
 
         if (idcategoria == 0) {
-            produto.setNome(request.getParameter("nome"));
-            produto.setDescricao(request.getParameter("descricao"));
-            
-            double valor;
-            try {
-                valor = Double.parseDouble(request.getParameter("valor"));
-                produto.setValor(valor);
-            } catch (NumberFormatException e) {
-                request.setAttribute("error", "Valor com formato incorreto.");
-                this.listar();
-                return;
+            if (filepath != null) {
+                produto.setNomeArquivoImagem(filepath);
+            } else {
+                produto.setNome(request.getParameter("nome"));
+                produto.setDescricao(request.getParameter("descricao"));
+
+                double valor;
+                try {
+                    valor = Double.parseDouble(request.getParameter("valor"));
+                    produto.setValor(valor);
+                } catch (NumberFormatException e) {
+                    request.setAttribute("error", "Valor com formato incorreto.");
+                    this.listar(true);
+                    return;
+                }
             }
         }
 
@@ -108,12 +146,13 @@ public class ServletProdutoController extends HttpServlet {
 
         try {
             produtoDAO.edit(produto);
+            request.setAttribute("success", "Produto alterado com sucesso");
         } catch (RollbackFailureException ex) {
+            request.setAttribute("error", ex);
             Logger.getLogger(ServletProdutoController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        request.setAttribute("success", "Produto alterada com sucesso");
-        this.listar();
+        this.listar(true);
     }
 
     private void excluir(Long id) throws ServletException, IOException {

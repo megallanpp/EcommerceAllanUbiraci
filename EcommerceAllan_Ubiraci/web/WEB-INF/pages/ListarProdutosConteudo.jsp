@@ -21,7 +21,7 @@
                         <c:forEach items="${requestScope.produtos}" var="produto"> 
                             <div class="col-sm-6 col-md-3">
                                 <div class="thumbnail">
-                                    <img src="${pageContext.request.contextPath}/resources/${produto.nomeArquivoImagem}" alt="produto">
+                                    <img src="${pageContext.request.contextPath}/resources/uploads/${produto.nomeArquivoImagem}" alt="produto">
                                 </div>
                                 <div class="caption">
                                     <h3>${produto.nome}</h3>

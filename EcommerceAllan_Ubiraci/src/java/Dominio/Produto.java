@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Table(name = "tab_produto")
 @Entity
-public class Produto implements Serializable {
+public class Produto implements Serializable, Comparable<Produto> {
 
     @OneToMany(mappedBy = "produto")
     private List<CategoriaProduto> categoriasProdutos;
@@ -139,6 +139,11 @@ public class Produto implements Serializable {
      */
     public void setProdutosCarrinhos(List<ProdutoCarrinho> produtosCarrinhos) {
         this.produtosCarrinhos = produtosCarrinhos;
+    }
+    
+    @Override
+    public int compareTo(Produto other) {
+        return nome.compareTo(other.nome);
     }
 
 }

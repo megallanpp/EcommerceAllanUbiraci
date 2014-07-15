@@ -132,13 +132,12 @@ public class ServletCategoriaProdutoController extends HttpServlet {
             for (CategoriaProduto categoriaProduto : categoriasprodutos) {
                 if (categoriaProduto.getCategoria().getId() == idcategoria && categoriaProduto.getProduto().getId() == idproduto) {
                     categoriaProdutoDAO.destroy(categoriaProduto.getId());
+                    request.setAttribute("success", "CategoriaProduto excluído com sucesso");
                 }
             }
         } catch (RollbackFailureException ex) {
             Logger.getLogger(ServletCategoriaProdutoController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        request.setAttribute("success", "CategoriaProduto excluído com sucesso");
 
         RequestDispatcher rd = request.getRequestDispatcher("/Restrito/Admin/ManterCategorias.jsp");
         rd.forward(request, response);
