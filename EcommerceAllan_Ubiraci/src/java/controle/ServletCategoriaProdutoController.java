@@ -125,19 +125,16 @@ public class ServletCategoriaProdutoController extends HttpServlet {
     private void excluir(Long idproduto, Long idcategoria) throws ServletException, IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("EcommerceAllan_UbiraciPU");
         CategoriaProdutoJpaController categoriaProdutoDAO = new CategoriaProdutoJpaController(emf);
-
-        List<CategoriaProduto> categoriasprodutos = categoriaProdutoDAO.findCategoriaProdutoEntities();
+        CategoriaJpaController categoriaDAO = new CategoriaJpaController(emf);
+        ProdutoJpaController produtoDAO = new ProdutoJpaController(emf);
+        Categoria categoria = categoriaDAO.findCategoria(idcategoria);
+        Produto produto = produtoDAO.findProduto(idproduto);
         try {
-
-            for (CategoriaProduto categoriaProduto : categoriasprodutos) {
-                if (categoriaProduto.getCategoria().getId() == idcategoria && categoriaProduto.getProduto().getId() == idproduto) {
-                    categoriaProdutoDAO.destroy(categoriaProduto.getId());
-                    request.setAttribute("success", "CategoriaProduto excluído com sucesso");
-                }
-            }
+            categoriaProdutoDAO.destroy(categoria, produto);
         } catch (RollbackFailureException ex) {
             Logger.getLogger(ServletCategoriaProdutoController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
 
         RequestDispatcher rd = request.getRequestDispatcher("/Restrito/Admin/ManterCategorias.jsp");
         rd.forward(request, response);

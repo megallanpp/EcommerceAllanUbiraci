@@ -62,7 +62,7 @@ public class ServletProdutoController extends HttpServlet {
     }
 
     private void listar() throws ServletException, IOException {
-        listar(true);
+        listar(false);
     }
 
     private void listar(boolean alteradoObjetos) throws ServletException, IOException {
@@ -130,7 +130,7 @@ public class ServletProdutoController extends HttpServlet {
                     produto.setValor(valor);
                 } catch (NumberFormatException e) {
                     request.setAttribute("error", "Valor com formato incorreto.");
-                    this.listar(true);
+                    this.listar();
                     return;
                 }
             }
@@ -152,7 +152,7 @@ public class ServletProdutoController extends HttpServlet {
             Logger.getLogger(ServletProdutoController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        this.listar(true);
+        this.listar();
     }
 
     private void excluir(Long id) throws ServletException, IOException {

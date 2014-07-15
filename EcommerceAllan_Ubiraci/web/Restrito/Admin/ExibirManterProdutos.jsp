@@ -40,9 +40,9 @@
                                     <img src="${pageContext.request.contextPath}/resources/uploads/${produto.nomeArquivoImagem}" alt="Generic placeholder thumbnail" style="width: 140px;">
                                 </div>
                                 <div style="width: 221px; height: 150px; float: left ; overflow-y: scroll;">  
-                                    <c:forEach items="${produto.categorias}" var="categoria"> 
-                                        ${categoria.nome}
-                                        <a href="${pageContext.request.contextPath}/categoriaprodutofc?tipo=excluircomids&idproduto=${produto.id}&idcategoria=${categoria.id}"> Excluir </a>
+                                    <c:forEach items="${produto.categoriasProdutos}" var="categoriaProduto"> 
+                                        ${categoriaProduto.categoria.nome}
+                                        <a href="${pageContext.request.contextPath}/categoriaprodutofc?tipo=excluircomids&idproduto=${categoriaProduto.produto.id}&idcategoria=${categoriaProduto.categoria.id}"> Excluir </a>
                                         <br>
                                     </c:forEach>  
 

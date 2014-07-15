@@ -14,7 +14,7 @@
             }
         }
         setInterval("chamar();", 1000);
-        setTimeout("document.location = '/EcommerceAllan_Ubiraci/ServletProduto';", 10000);
+        setTimeout("document.location = '/EcommerceAllan_Ubiraci/categoriaprodutofc?tipo=listar';", 10000);
         //-->
     </script> 
     <body>

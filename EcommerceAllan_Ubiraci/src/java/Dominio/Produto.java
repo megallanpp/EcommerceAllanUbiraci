@@ -3,6 +3,7 @@ package Dominio;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 public class Produto implements Serializable, Comparable<Produto> {
 
-    @OneToMany(mappedBy = "produto")
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
     private List<CategoriaProduto> categoriasProdutos;
 
     @OneToMany(mappedBy = "produto")

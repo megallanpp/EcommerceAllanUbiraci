@@ -6,7 +6,9 @@
 
 package controle.DAO;
 
+import Dominio.Categoria;
 import Dominio.CategoriaProduto;
+import Dominio.Produto;
 import controle.DAO.exceptions.NonexistentEntityException;
 import controle.DAO.exceptions.PreexistingEntityException;
 import controle.DAO.exceptions.RollbackFailureException;
@@ -14,9 +16,9 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -86,6 +88,30 @@ public class CategoriaProdutoJpaController implements Serializable {
         }
     }    
 
+    public void destroy(Categoria categoria, Produto produto) throws RollbackFailureException{
+        EntityManager em = null;
+        EntityTransaction utx = null;
+        try {
+            em = getEntityManager();
+            utx = em.getTransaction();
+            utx.begin();
+            CategoriaProduto categoriaProduto = (CategoriaProduto) em.createNamedQuery("categoriaproduto.busca").setParameter("categoria", categoria).setParameter("produto", produto).getSingleResult();
+            //CategoriaProduto categoriaProduto = em.getReference(CategoriaProduto.class, id);
+            em.remove(categoriaProduto);
+            utx.commit();
+        } catch (Exception ex) {
+            try {
+                utx.rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            //throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
 
     public void destroy(Long id) throws RollbackFailureException{
         EntityManager em = null;

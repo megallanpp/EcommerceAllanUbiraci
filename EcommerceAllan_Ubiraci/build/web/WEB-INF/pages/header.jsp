@@ -16,7 +16,7 @@
             <div class="topPanel">
                 <div class="search">
                     <div class="form-head">
-                        <form method="POST" action="/EcommerceAllan_Ubiraci/ServletProduto">
+                        <form method="POST" action="/EcommerceAllan_Ubiraci/categoriaprodutofc?tipo=listar">
                             <c:choose>
                                 <c:when test="${sessionScope.logado}">
                                     Você está logado | 
